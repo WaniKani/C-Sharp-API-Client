@@ -35,11 +35,14 @@ namespace WaniKaniClient
 
         private JObject Request(string resource = null, string optionalArgument = null)
         {
+            #warning Remove this when done
             return JObject.Parse(File.ReadAllText("text.txt"));
 
             WebClient httpClient = new WebClient();
 
             string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
+
+            #warning Remove this when done
             File.WriteAllText("text.txt", responce); //Temporare Solution to not ask server to much.
 
             return JObject.Parse(responce);
@@ -47,9 +50,6 @@ namespace WaniKaniClient
 
         public UserInformation GetUserInformation()
         {
-            //responce = 
-            //
-
             JObject responce = Request();
 
             var someData = responce["user_information"];
