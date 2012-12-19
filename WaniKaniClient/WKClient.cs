@@ -36,7 +36,7 @@ namespace WaniKaniClient
         private JObject Request(string resource = null, string optionalArgument = null)
         {
             #warning Remove this when done
-            return JObject.Parse(File.ReadAllText("text.txt"));
+            //return JObject.Parse(File.ReadAllText("text.txt"));
 
             WebClient httpClient = new WebClient();
 
@@ -48,14 +48,30 @@ namespace WaniKaniClient
             return JObject.Parse(responce);
         }
 
-        public UserInformation GetUserInformation()
+        public UserInformation UserInformation
         {
-            JObject responce = Request();
+            get
+            {
+                JObject responce = Request("user-information");
 
-            var someData = responce["user_information"];
+                var requestData = responce["user_information"];
 
-            return JsonConvert.DeserializeObject<UserInformation>(someData.ToString());
+                return JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
+            }
         }
+
+        public StudyQueue StudyQueue
+        {
+            get
+            {
+                JObject responce = Request("study-queue");
+
+                var requestData = responce["requested_information"];
+
+                return JsonConvert.DeserializeObject<StudyQueue>(requestData.ToString());
+            }
+        }
+
 
     }
 }

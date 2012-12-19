@@ -12,7 +12,7 @@ namespace WaniKaniApp
         {
             WKClient client = new WKClient("114023cc08517f6180a1f120bfffe87f");
 
-            var data = client.GetUserInformation();
+            var data = client.StudyQueue;
 
             Console.WriteLine("Please a key to exit");
             Console.ReadKey();
