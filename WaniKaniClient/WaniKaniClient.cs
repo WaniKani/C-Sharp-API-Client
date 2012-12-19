@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WaniKaniClient.Models;
+using WaniKaniClientLib.Models;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using WaniKaniClient.JsonHelpers;
+using WaniKaniClientLib.JsonHelpers;
 
-namespace WaniKaniClient
+namespace WaniKaniClientLib
 {
-    public class WKClient
+    public class WaniKaniClient
     {
         public string APIKey { get; private set; }
         public static readonly string ApiVersion = "v1.1";
 
-        public WKClient(string apiKey)
+        public WaniKaniClient(string apiKey)
         {
             APIKey = apiKey;
         }

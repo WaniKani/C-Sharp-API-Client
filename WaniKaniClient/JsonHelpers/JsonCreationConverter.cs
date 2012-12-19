@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace WaniKaniClient.JsonHelpers
+namespace WaniKaniClientLib.JsonHelpers
 {
     public abstract class JsonCreationConverter<T> : JsonConverter
     {

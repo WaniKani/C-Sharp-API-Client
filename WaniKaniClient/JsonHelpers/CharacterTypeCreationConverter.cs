@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WaniKaniClient.Models;
+using WaniKaniClientLib.Models;
 using Newtonsoft.Json.Linq;
 
-namespace WaniKaniClient.JsonHelpers
+namespace WaniKaniClientLib.JsonHelpers
 {
     public class CharacterTypeCreationConverter : JsonCreationConverter<BaseCharacter>
     {

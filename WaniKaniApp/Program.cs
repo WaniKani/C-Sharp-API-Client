@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WaniKaniClient;
+using WaniKaniClientLib;
 
 namespace WaniKaniApp
 {
@@ -10,7 +10,7 @@ namespace WaniKaniApp
     {
         static void Main(string[] args)
         {
-            WKClient client = new WKClient("114023cc08517f6180a1f120bfffe87f");
+            WaniKaniClient client = new WaniKaniClient("114023cc08517f6180a1f120bfffe87f");
 
             var data = client.RecentUnlocks(50);
 

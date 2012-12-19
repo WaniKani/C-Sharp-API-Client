@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace WaniKaniClient.Models
+namespace WaniKaniClientLib.Models
 {
     public class StudyQueue
     {

@@ -8,8 +8,8 @@
     <ProjectGuid>{6546956C-826B-4A5C-B639-A0F909C68F31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WaniKaniClient</RootNamespace>
-    <AssemblyName>WaniKaniClient</AssemblyName>
+    <RootNamespace>WaniKaniClientLib</RootNamespace>
+    <AssemblyName>WaniKaniClientLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,7 +53,7 @@
     <Compile Include="Models\StudyQueue.cs" />
     <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Models\Vocabulary.cs" />
-    <Compile Include="WKClient.cs" />
+    <Compile Include="WaniKaniClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

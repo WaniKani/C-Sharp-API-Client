@@ -51,9 +51,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WaniKaniClient\WaniKaniClient.csproj">
+    <ProjectReference Include="..\WaniKaniClient\WaniKaniClientLib.csproj">
       <Project>{6546956C-826B-4A5C-B639-A0F909C68F31}</Project>
-      <Name>WaniKaniClient</Name>
+      <Name>WaniKaniClientLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
