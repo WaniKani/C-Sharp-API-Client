@@ -72,6 +72,16 @@ namespace WaniKaniClient
             }
         }
 
+        public LevelProgression LevelProgression
+        {
+            get
+            {
+                JObject responce = Request("level-progression");
 
+                var requestData = responce["requested_information"];
+
+                return JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
+            }
+        }
     }
 }

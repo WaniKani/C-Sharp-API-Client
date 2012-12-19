@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\LevelProgression.cs" />
     <Compile Include="Models\StudyQueue.cs" />
     <Compile Include="Models\UserInformation.cs" />
     <Compile Include="WKClient.cs" />
