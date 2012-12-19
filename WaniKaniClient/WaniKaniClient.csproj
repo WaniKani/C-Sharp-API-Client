@@ -41,11 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
+    <Compile Include="JsonHelpers\CharacterTypeCreationConverter.cs" />
+    <Compile Include="JsonHelpers\JsonCreationConverter.cs" />
+    <Compile Include="Models\BaseCharacter.cs" />
+    <Compile Include="Models\Kanji.cs" />
     <Compile Include="Models\LevelProgression.cs" />
+    <Compile Include="Models\Radical.cs" />
     <Compile Include="Models\SrsDistribution.cs" />
     <Compile Include="Models\SrsDistributionItem.cs" />
     <Compile Include="Models\StudyQueue.cs" />
     <Compile Include="Models\UserInformation.cs" />
+    <Compile Include="Models\Vocabulary.cs" />
     <Compile Include="WKClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace WaniKaniClient.Models
         public int PostsCount { get; set; }
 
         [JsonProperty("creation_date")]
-        public int CreationTimeStamp { get; set; }
+        public long CreationTimeStamp { get; set; }
 
         public DateTime CreatioDate
         {

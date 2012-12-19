@@ -15,7 +15,7 @@ namespace WaniKaniClient.Models
         public int ReviewsAvailable { get; set; }
 
         [JsonProperty("next_review_date")]
-        public int NextReviewTimeStamp { get; set; }
+        public long NextReviewTimeStamp { get; set; }
         public DateTime NextReviewDate
         {
             get

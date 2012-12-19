@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using WaniKaniClient.JsonHelpers;
 
 namespace WaniKaniClient
 {
@@ -94,6 +95,18 @@ namespace WaniKaniClient
 
                 return JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
             }
+        }
+
+        public List<BaseCharacter> RecentUnlocks(int take = 10)
+        {
+            if (take > 100)
+                take = 100;
+
+            JObject responce = Request("recent-unlocks", take.ToString());
+
+            var requestData = responce["requested_information"];
+
+            return JsonConvert.DeserializeObject<List<BaseCharacter>>(requestData.ToString(), new CharacterTypeCreationConverter());
         }
 
     }
