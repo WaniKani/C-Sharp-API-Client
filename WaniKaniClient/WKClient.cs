@@ -83,5 +83,18 @@ namespace WaniKaniClient
                 return JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
             }
         }
+
+        public SrsDistribution SrsDistribution
+        {
+            get
+            {
+                JObject responce = Request("srs-distribution");
+
+                var requestData = responce["requested_information"];
+
+                return JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
+            }
+        }
+
     }
 }
