@@ -15,10 +15,15 @@ namespace WaniKaniClientLib
     {
         public string APIKey { get; private set; }
         public static readonly string ApiVersion = "v1.1";
+        public int CacheInMinutes { get; set; }
 
-        public WaniKaniClient(string apiKey)
+        private UserInformation _cachedUserInformation;
+        private DateTime _cachedUserInformationTime;
+
+        public WaniKaniClient(string apiKey, int cacheInMinutes = 15)
         {
             APIKey = apiKey;
+            CacheInMinutes = cacheInMinutes;
         }
 
         private string BuildUrl(string resource = null, string optionalArgument = null)
@@ -53,12 +58,22 @@ namespace WaniKaniClientLib
         {
             get
             {
+                if (_cachedUserInformation != null && _cachedUserInformationTime > DateTime.Now)
+                    return _cachedUserInformation;
+
                 JObject responce = Request("user-information");
+                UpdateUserInformation(responce);
 
-                var requestData = responce["user_information"];
-
-                return JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
+                return _cachedUserInformation;
             }
+        }
+
+        private void UpdateUserInformation(JObject responce)
+        {
+            var requestData = responce["user_information"];
+            _cachedUserInformation = JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
+
+            _cachedUserInformationTime = DateTime.Now.AddMinutes(CacheInMinutes);
         }
 
         public StudyQueue StudyQueue
@@ -66,6 +81,7 @@ namespace WaniKaniClientLib
             get
             {
                 JObject responce = Request("study-queue");
+                UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
@@ -78,6 +94,7 @@ namespace WaniKaniClientLib
             get
             {
                 JObject responce = Request("level-progression");
+                UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
@@ -90,6 +107,7 @@ namespace WaniKaniClientLib
             get
             {
                 JObject responce = Request("srs-distribution");
+                UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
@@ -103,6 +121,7 @@ namespace WaniKaniClientLib
                 take = 100;
 
             JObject responce = Request("recent-unlocks", take.ToString());
+            UpdateUserInformation(responce);
 
             var requestData = responce["requested_information"];
 

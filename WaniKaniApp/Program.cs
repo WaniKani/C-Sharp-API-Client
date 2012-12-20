@@ -14,6 +14,8 @@ namespace WaniKaniApp
 
             var data = client.RecentUnlocks(50);
 
+            var data2 = client.UserInformation;
+
             Console.WriteLine("Please a key to exit");
             Console.ReadKey();
         }
