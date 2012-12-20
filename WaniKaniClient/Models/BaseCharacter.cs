@@ -26,20 +26,6 @@ namespace WaniKaniClientLib.Models
 
         public string Percentage { get; set; }
 
-      //  "stats": {
-      //  "srs": "enlighten",
-      //  "unlocked_date": 1337747704,
-      //  "available_date": 1359290034,
-      //  "burned": false,
-      //  "burned_date": 0,
-      //  "meaning_correct": 11,
-      //  "meaning_incorrect": 0,
-      //  "meaning_max_streak": 11,
-      //  "meaning_current_streak": 11,
-      //  "reading_correct": 11,
-      //  "reading_incorrect": 4,
-      //  "reading_max_streak": 9,
-      //  "reading_current_streak": 9
-      //}
+        public Stats Stats { get; set; }
     }
 }

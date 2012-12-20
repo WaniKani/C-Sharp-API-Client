@@ -24,7 +24,6 @@ namespace WaniKaniClientLib.Models
 
         [JsonProperty("creation_date")]
         public long CreationTimeStamp { get; set; }
-
         public DateTime CreatioDate
         {
             get

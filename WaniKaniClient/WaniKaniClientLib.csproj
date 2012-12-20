@@ -50,6 +50,7 @@
     <Compile Include="Models\Radical.cs" />
     <Compile Include="Models\SrsDistribution.cs" />
     <Compile Include="Models\SrsDistributionItem.cs" />
+    <Compile Include="Models\Stats.cs" />
     <Compile Include="Models\StudyQueue.cs" />
     <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Models\Vocabulary.cs" />

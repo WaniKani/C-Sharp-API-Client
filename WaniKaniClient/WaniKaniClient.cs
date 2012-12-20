@@ -155,5 +155,94 @@ namespace WaniKaniClientLib
             return JsonConvert.DeserializeObject<List<BaseCharacter>>(requestData.ToString(), new CharacterTypeCreationConverter());
         }
 
+
+        /// <summary>
+        /// This request is not cached.
+        /// </summary>
+        /// <param name="maxPercentage"></param>
+        /// <returns></returns>
+        public List<BaseCharacter> CriticalItems(int maxPercentage = 75)
+        {
+            if (maxPercentage > 100)
+                maxPercentage = 100;
+
+            JObject responce = Request("critical-items", maxPercentage.ToString());
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            return JsonConvert.DeserializeObject<List<BaseCharacter>>(requestData.ToString(), new CharacterTypeCreationConverter());
+        }
+
+        public List<Radical> Radicals(int maxLevel = 0)
+        {
+            if (maxLevel == 0)
+            {
+                if (_cachedUserInformation == null)
+                    throw new Exception("No cached user information, do not know max level so plase enter your own max level");
+
+                maxLevel = _cachedUserInformation.Level;
+            }
+
+            return Radicals(string.Join(",", Enumerable.Range(1, maxLevel)));
+        }
+
+        public List<Radical> Radicals(string levels)
+        {
+            JObject responce = Request("radicals", levels);
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            return JsonConvert.DeserializeObject<List<Radical>>(requestData.ToString());
+        }
+
+
+        public List<Kanji> Kanji(int maxLevel = 0)
+        {
+            if (maxLevel == 0)
+            {
+                if (_cachedUserInformation == null)
+                    throw new Exception("No cached user information, do not know max level so plase enter your own max level");
+
+                maxLevel = _cachedUserInformation.Level;
+            }
+
+            return Kanji(string.Join(",", Enumerable.Range(1, maxLevel)));
+        }
+
+        public List<Kanji> Kanji(string levels)
+        {
+            JObject responce = Request("kanji", levels);
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            return JsonConvert.DeserializeObject<List<Kanji>>(requestData.ToString());
+        }
+
+        public List<Vocabulary> Vocabulary(int maxLevel = 0)
+        {
+            if (maxLevel == 0)
+            {
+                if (_cachedUserInformation == null)
+                    throw new Exception("No cached user information, do not know max level so plase enter your own max level");
+
+                maxLevel = _cachedUserInformation.Level;
+            }
+
+            return Vocabulary(string.Join(",", Enumerable.Range(1, maxLevel)));
+        }
+
+        public List<Vocabulary> Vocabulary(string levels)
+        {
+            JObject responce = Request("vocabulary", levels);
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            return JsonConvert.DeserializeObject<List<Vocabulary>>(requestData.ToString());
+        }
+
     }
 }
