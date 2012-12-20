@@ -18,7 +18,14 @@ namespace WaniKaniClientLib
         public int CacheInMinutes { get; set; }
 
         private UserInformation _cachedUserInformation;
-        private DateTime _cachedUserInformationTime;
+        private DateTime _cachedTimeUserInformation;
+        private StudyQueue _cachedStudyQueue;
+        private DateTime _cachedTimeStudyQueue;
+        private LevelProgression _cachedLevelProgression;
+        private DateTime _cachedTimeLevelProgression;
+        private SrsDistribution _cachedSrsDistribution;
+        private DateTime _cachedTimeSrsDistribution;
+
 
         public WaniKaniClient(string apiKey, int cacheInMinutes = 15)
         {
@@ -58,7 +65,7 @@ namespace WaniKaniClientLib
         {
             get
             {
-                if (_cachedUserInformation != null && _cachedUserInformationTime > DateTime.Now)
+                if (_cachedUserInformation != null && _cachedTimeUserInformation > DateTime.Now)
                     return _cachedUserInformation;
 
                 JObject responce = Request("user-information");
@@ -73,19 +80,24 @@ namespace WaniKaniClientLib
             var requestData = responce["user_information"];
             _cachedUserInformation = JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
 
-            _cachedUserInformationTime = DateTime.Now.AddMinutes(CacheInMinutes);
+            _cachedTimeUserInformation = DateTime.Now.AddMinutes(CacheInMinutes);
         }
 
         public StudyQueue StudyQueue
         {
             get
             {
+                if (_cachedStudyQueue != null && _cachedTimeStudyQueue > DateTime.Now)
+                    return _cachedStudyQueue;
+
                 JObject responce = Request("study-queue");
                 UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
-                return JsonConvert.DeserializeObject<StudyQueue>(requestData.ToString());
+                _cachedStudyQueue =  JsonConvert.DeserializeObject<StudyQueue>(requestData.ToString());
+                
+                return _cachedStudyQueue;
             }
         }
 
@@ -93,12 +105,17 @@ namespace WaniKaniClientLib
         {
             get
             {
+                if (_cachedLevelProgression != null && _cachedTimeLevelProgression > DateTime.Now)
+                    return _cachedLevelProgression;
+
                 JObject responce = Request("level-progression");
                 UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
-                return JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
+                _cachedLevelProgression = JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
+
+                return _cachedLevelProgression;
             }
         }
 
@@ -106,15 +123,25 @@ namespace WaniKaniClientLib
         {
             get
             {
+                if (_cachedSrsDistribution != null && _cachedTimeSrsDistribution > DateTime.Now)
+                    return _cachedSrsDistribution;
+
                 JObject responce = Request("srs-distribution");
                 UpdateUserInformation(responce);
 
                 var requestData = responce["requested_information"];
 
-                return JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
+                _cachedSrsDistribution =  JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
+                return _cachedSrsDistribution;
             }
         }
 
+        /// <summary>
+        /// Returns a list of the recent unlocks, Warning this one is not cached due it takes parameters, if you want to keep this information
+        /// Cache it yourself.
+        /// </summary>
+        /// <param name="take">The number of recent unlocks, Max is 100</param>
+        /// <returns>Returns a list of Character information.</returns>
         public List<BaseCharacter> RecentUnlocks(int take = 10)
         {
             if (take > 100)
