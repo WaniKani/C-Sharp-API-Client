@@ -8,8 +8,8 @@
     <ProjectGuid>{AC47E8F6-4436-4FFF-AF3D-F3F7A538696F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WaniKaniApp</RootNamespace>
-    <AssemblyName>WaniKaniApp</AssemblyName>
+    <RootNamespace>WaniKaniClientDemo</RootNamespace>
+    <AssemblyName>WaniKaniClientDemo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

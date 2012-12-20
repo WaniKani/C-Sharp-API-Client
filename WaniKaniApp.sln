@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaniKaniApp", "WaniKaniApp\WaniKaniApp.csproj", "{AC47E8F6-4436-4FFF-AF3D-F3F7A538696F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaniKaniClientDemo", "WaniKaniApp\WaniKaniClientDemo.csproj", "{AC47E8F6-4436-4FFF-AF3D-F3F7A538696F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaniKaniClientLib", "WaniKaniClient\WaniKaniClientLib.csproj", "{6546956C-826B-4A5C-B639-A0F909C68F31}"
 EndProject

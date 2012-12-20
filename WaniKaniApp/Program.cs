@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using WaniKaniClientLib;
 
-namespace WaniKaniApp
+namespace WaniKaniClientDemo
 {
     class Program
     {
