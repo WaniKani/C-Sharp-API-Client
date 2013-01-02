@@ -25,33 +25,22 @@ namespace WaniKaniClientLib
         private SrsDistribution _cachedSrsDistribution;
         private DateTime _cachedTimeSrsDistribution;
 
+        /// <summary>
+        /// Creates the client object.
+        /// </summary>
+        /// <param name="apiKey">The users API key</param>
+        /// <param name="cacheInMinutes">How many minutes you want requests to be cached, default is 15.</param>
         public WaniKaniClient(string apiKey, int cacheInMinutes = 15)
         {
             APIKey = apiKey;
             CacheInMinutes = cacheInMinutes;
         }
 
-        private string BuildUrl(string resource = null, string optionalArgument = null)
-        {
-            string url = "http://www.wanikani.com/api/" + ApiVersion + "/user/" + APIKey + "/";
-
-            if (resource != null)
-                url += resource + "/";
-
-            if (optionalArgument != null)
-                url += optionalArgument + "/";
-
-            return url;
-        }
-
-        private JObject Request(string resource = null, string optionalArgument = null)
-        {
-            WebClient httpClient = new WebClient();
-            string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
-
-            return JObject.Parse(responce);
-        }
-
+        /// <summary>
+        /// Get user information, you get this information from every request you do so if your smart you don't request this information the first time.
+        /// </summary>
+        /// <param name="noCache">No cached results if set to true</param>
+        /// <returns>UserInformation</returns>
         public UserInformation UserInformation(bool noCache = false)
         {
             if (!noCache && _cachedUserInformation != null && _cachedTimeUserInformation > DateTime.Now)
@@ -63,14 +52,11 @@ namespace WaniKaniClientLib
             return _cachedUserInformation;
         }
 
-        private void UpdateUserInformation(JObject responce)
-        {
-            var requestData = responce["user_information"];
-            _cachedUserInformation = JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
-
-            _cachedTimeUserInformation = DateTime.Now.AddMinutes(CacheInMinutes);
-        }
-
+        /// <summary>
+        /// Retreives the StudyQueue, it contains information such as number of reviews left.
+        /// </summary>
+        /// <param name="noCache">No cached results if set to true</param>
+        /// <returns>StudyQueue</returns>
         public StudyQueue StudyQueue(bool noCache = false)
         {
             if (!noCache && _cachedStudyQueue != null && _cachedTimeStudyQueue > DateTime.Now)
@@ -87,6 +73,11 @@ namespace WaniKaniClientLib
             return _cachedStudyQueue;
         }
 
+        /// <summary>
+        /// Retreives information about the current level progression.
+        /// </summary>
+        /// <param name="noCache">No cached results if set to true</param>
+        /// <returns>LevelProgression</returns>
         public LevelProgression LevelProgression(bool noCache = false)
         {
             if (!noCache &&  _cachedLevelProgression != null && _cachedTimeLevelProgression > DateTime.Now)
@@ -103,6 +94,11 @@ namespace WaniKaniClientLib
             return _cachedLevelProgression;
         }
 
+        /// <summary>
+        /// Get the SRS detailed distrobution.
+        /// </summary>
+        /// <param name="noCache">No cached results if set to true</param>
+        /// <returns>SrsDistribution</returns>
         public SrsDistribution SrsDistribution(bool noCache = false)
         {
             if (!noCache && _cachedSrsDistribution != null && _cachedTimeSrsDistribution > DateTime.Now)
@@ -110,7 +106,7 @@ namespace WaniKaniClientLib
 
             JObject responce = Request("srs-distribution");
             UpdateUserInformation(responce);
-            @
+
             var requestData = responce["requested_information"];
 
             _cachedSrsDistribution =  JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
@@ -139,10 +135,11 @@ namespace WaniKaniClientLib
 
 
         /// <summary>
+        /// Gets all items that is in the users Critical List ( Default 75% or lower) 
         /// This request is not cached.
         /// </summary>
-        /// <param name="maxPercentage"></param>
-        /// <returns></returns>
+        /// <param name="maxPercentage">The max % failed to retreeive.</param>
+        /// <returns>List<BaseCharacter></returns>
         public List<BaseCharacter> CriticalItems(int maxPercentage = 75)
         {
             if (maxPercentage > 100)
@@ -156,6 +153,11 @@ namespace WaniKaniClientLib
             return JsonConvert.DeserializeObject<List<BaseCharacter>>(requestData.ToString(), new CharacterTypeCreationConverter());
         }
 
+        /// <summary>
+        /// Get all unlocked Radicals up to given level, if no level given will get all unlocked.
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Radicals</returns>
         public List<Radical> Radicals(int maxLevel = 0)
         {
             if (maxLevel == 0)
@@ -169,6 +171,11 @@ namespace WaniKaniClientLib
             return Radicals(string.Join(",", Enumerable.Range(1, maxLevel)));
         }
 
+        /// <summary>
+        /// Get all unlocked Radicals from the given range of levels, Each level is comma separated, example 2,3,4. To get a single level you can just enter the level such as 5
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Radicals</returns>
         public List<Radical> Radicals(string levels)
         {
             JObject responce = Request("radicals", levels);
@@ -179,7 +186,11 @@ namespace WaniKaniClientLib
             return JsonConvert.DeserializeObject<List<Radical>>(requestData.ToString());
         }
 
-
+        /// <summary>
+        /// Get all unlocked Kanji up to given level, if no level given will get all unlocked.
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Kanjis</returns>
         public List<Kanji> Kanji(int maxLevel = 0)
         {
             if (maxLevel == 0)
@@ -190,6 +201,11 @@ namespace WaniKaniClientLib
             return Kanji(string.Join(",", Enumerable.Range(1, maxLevel)));
         }
 
+        /// <summary>
+        /// Get all unlocked Kanjis from the given range of levels, Each level is comma separated, example 2,3,4. To get a single level you can just enter the level such as 5
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Kanji</returns>
         public List<Kanji> Kanji(string levels)
         {
             JObject responce = Request("kanji", levels);
@@ -200,6 +216,11 @@ namespace WaniKaniClientLib
             return JsonConvert.DeserializeObject<List<Kanji>>(requestData.ToString());
         }
 
+        /// <summary>
+        /// Get all unlocked Vocabulary up to given level, if no level given will get all unlocked.
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Vocabulary</returns>
         public List<Vocabulary> Vocabulary(int maxLevel = 0)
         {
             if (maxLevel == 0)
@@ -210,7 +231,11 @@ namespace WaniKaniClientLib
             return Vocabulary(string.Join(",", Enumerable.Range(1, maxLevel)));
         }
 
-
+        /// <summary>
+        /// Get all unlocked Vocabulary from the given range of levels, Each level is comma separated, example 2,3,4. To get a single level you can just enter the level such as 5
+        /// </summary>
+        /// <param name="maxLevel">Max level to get</param>
+        /// <returns>List of Vocabulary</returns>
         public List<Vocabulary> Vocabulary(string levels)
         {
             JObject responce = Request("vocabulary", levels);
@@ -219,6 +244,35 @@ namespace WaniKaniClientLib
             var requestData = responce["requested_information"];
 
             return JsonConvert.DeserializeObject<List<Vocabulary>>(requestData.ToString());
+        }
+
+        private string BuildUrl(string resource = null, string optionalArgument = null)
+        {
+            string url = "http://www.wanikani.com/api/" + ApiVersion + "/user/" + APIKey + "/";
+
+            if (resource != null)
+                url += resource + "/";
+
+            if (optionalArgument != null)
+                url += optionalArgument + "/";
+
+            return url;
+        }
+
+        private JObject Request(string resource = null, string optionalArgument = null)
+        {
+            WebClient httpClient = new WebClient();
+            string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
+
+            return JObject.Parse(responce);
+        }
+
+        private void UpdateUserInformation(JObject responce)
+        {
+            var requestData = responce["user_information"];
+            _cachedUserInformation = JsonConvert.DeserializeObject<UserInformation>(requestData.ToString());
+
+            _cachedTimeUserInformation = DateTime.Now.AddMinutes(CacheInMinutes);
         }
 
     }

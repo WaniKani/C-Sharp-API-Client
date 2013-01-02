@@ -13,9 +13,10 @@ namespace WaniKaniClientDemo
             Console.WriteLine("PLease enter your API key: ");
             string apiKey = Console.ReadLine();
 
-            WaniKaniClient client = new WaniKaniClient(apiKey);
+            var client = new WaniKaniClient(apiKey);
 
             var studyQueue = client.StudyQueue();
+            studyQueue = client.StudyQueue();
 
             Console.WriteLine("Hello {0}", client.UserInformation().UserName);
             Console.WriteLine("You have {0} reviews and {1} new lessons.", studyQueue.ReviewsAvailable, studyQueue.LessonsAvailable);
