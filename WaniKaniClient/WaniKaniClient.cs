@@ -240,7 +240,7 @@ namespace WaniKaniClientLib
         {
             JObject responce = Request("vocabulary", levels);
             UpdateUserInformation(responce);
-
+            
             var requestData = responce["requested_information"];
 
             return JsonConvert.DeserializeObject<List<Vocabulary>>(requestData.ToString());
