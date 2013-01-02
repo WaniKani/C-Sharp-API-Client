@@ -1,17 +1,20 @@
-C-Sharp-API-Client
+## C-Sharp-API-Client
 This is a simple API Client for WaniKani to speed up projects written in .NET
 Current API version is 1.1
 
-How to use:
+Copyright (c) 2012, Daniel Widegren
+All code is licensed under the MIT License, Please read License.txt for more information.
+
+## How to use:
 Include the dll or code into your project.
 
-To create a client.
+#### To create a client.
 var client = new WaniKaniClient("theApiKey");
 
-To get the latest study queue Information
+#### To get the latest study queue Information
 var studyQueue = client.StudyQueue();
 
-With that you can example see how many reviews you got left.
+#### With that you can example see how many reviews you got left.
 Console.WriteLine("You have {0} reviews and {1} new lessons.", studyQueue.ReviewsAvailable, studyQueue.LessonsAvailable);
 
 The API got full XML documentation for every public method and pretty self explained.
