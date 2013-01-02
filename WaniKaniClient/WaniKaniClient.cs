@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using WaniKaniClientLib.Models;
 using System.Net;
-using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using WaniKaniClientLib.JsonHelpers;
@@ -25,7 +24,6 @@ namespace WaniKaniClientLib
         private DateTime _cachedTimeLevelProgression;
         private SrsDistribution _cachedSrsDistribution;
         private DateTime _cachedTimeSrsDistribution;
-
 
         public WaniKaniClient(string apiKey, int cacheInMinutes = 15)
         {
@@ -48,31 +46,21 @@ namespace WaniKaniClientLib
 
         private JObject Request(string resource = null, string optionalArgument = null)
         {
-            #warning Remove this when done
-            //return JObject.Parse(File.ReadAllText("text.txt"));
-
             WebClient httpClient = new WebClient();
-
             string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
-
-            #warning Remove this when done
-            File.WriteAllText("text.txt", responce); //Temporare Solution to not ask server to much.
 
             return JObject.Parse(responce);
         }
 
-        public UserInformation UserInformation
+        public UserInformation UserInformation(bool noCache = false)
         {
-            get
-            {
-                if (_cachedUserInformation != null && _cachedTimeUserInformation > DateTime.Now)
-                    return _cachedUserInformation;
-
-                JObject responce = Request("user-information");
-                UpdateUserInformation(responce);
-
+            if (!noCache && _cachedUserInformation != null && _cachedTimeUserInformation > DateTime.Now)
                 return _cachedUserInformation;
-            }
+
+            JObject responce = Request("user-information");
+            UpdateUserInformation(responce);
+
+            return _cachedUserInformation;
         }
 
         private void UpdateUserInformation(JObject responce)
@@ -83,57 +71,51 @@ namespace WaniKaniClientLib
             _cachedTimeUserInformation = DateTime.Now.AddMinutes(CacheInMinutes);
         }
 
-        public StudyQueue StudyQueue
+        public StudyQueue StudyQueue(bool noCache = false)
         {
-            get
-            {
-                if (_cachedStudyQueue != null && _cachedTimeStudyQueue > DateTime.Now)
-                    return _cachedStudyQueue;
-
-                JObject responce = Request("study-queue");
-                UpdateUserInformation(responce);
-
-                var requestData = responce["requested_information"];
-
-                _cachedStudyQueue =  JsonConvert.DeserializeObject<StudyQueue>(requestData.ToString());
-                
+            if (!noCache && _cachedStudyQueue != null && _cachedTimeStudyQueue > DateTime.Now)
                 return _cachedStudyQueue;
-            }
+
+            JObject responce = Request("study-queue");
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            _cachedStudyQueue =  JsonConvert.DeserializeObject<StudyQueue>(requestData.ToString());
+
+            _cachedTimeStudyQueue = DateTime.Now.AddMinutes(CacheInMinutes);
+            return _cachedStudyQueue;
         }
 
-        public LevelProgression LevelProgression
+        public LevelProgression LevelProgression(bool noCache = false)
         {
-            get
-            {
-                if (_cachedLevelProgression != null && _cachedTimeLevelProgression > DateTime.Now)
-                    return _cachedLevelProgression;
-
-                JObject responce = Request("level-progression");
-                UpdateUserInformation(responce);
-
-                var requestData = responce["requested_information"];
-
-                _cachedLevelProgression = JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
-
+            if (!noCache &&  _cachedLevelProgression != null && _cachedTimeLevelProgression > DateTime.Now)
                 return _cachedLevelProgression;
-            }
+
+            JObject responce = Request("level-progression");
+            UpdateUserInformation(responce);
+
+            var requestData = responce["requested_information"];
+
+            _cachedLevelProgression = JsonConvert.DeserializeObject<LevelProgression>(requestData.ToString());
+
+            _cachedTimeLevelProgression = DateTime.Now.AddMinutes(CacheInMinutes);
+            return _cachedLevelProgression;
         }
 
-        public SrsDistribution SrsDistribution
+        public SrsDistribution SrsDistribution(bool noCache = false)
         {
-            get
-            {
-                if (_cachedSrsDistribution != null && _cachedTimeSrsDistribution > DateTime.Now)
-                    return _cachedSrsDistribution;
-
-                JObject responce = Request("srs-distribution");
-                UpdateUserInformation(responce);
-
-                var requestData = responce["requested_information"];
-
-                _cachedSrsDistribution =  JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
+            if (!noCache && _cachedSrsDistribution != null && _cachedTimeSrsDistribution > DateTime.Now)
                 return _cachedSrsDistribution;
-            }
+
+            JObject responce = Request("srs-distribution");
+            UpdateUserInformation(responce);
+            @
+            var requestData = responce["requested_information"];
+
+            _cachedSrsDistribution =  JsonConvert.DeserializeObject<SrsDistribution>(requestData.ToString());
+            _cachedTimeSrsDistribution = DateTime.Now.AddMinutes(CacheInMinutes);
+            return _cachedSrsDistribution;
         }
 
         /// <summary>
@@ -202,10 +184,7 @@ namespace WaniKaniClientLib
         {
             if (maxLevel == 0)
             {
-                if (_cachedUserInformation == null)
-                    throw new Exception("No cached user information, do not know max level so plase enter your own max level");
-
-                maxLevel = _cachedUserInformation.Level;
+                maxLevel = UserInformation().Level;
             }
 
             return Kanji(string.Join(",", Enumerable.Range(1, maxLevel)));
@@ -225,14 +204,12 @@ namespace WaniKaniClientLib
         {
             if (maxLevel == 0)
             {
-                if (_cachedUserInformation == null)
-                    throw new Exception("No cached user information, do not know max level so plase enter your own max level");
-
-                maxLevel = _cachedUserInformation.Level;
+                maxLevel = UserInformation().Level;
             }
 
             return Vocabulary(string.Join(",", Enumerable.Range(1, maxLevel)));
         }
+
 
         public List<Vocabulary> Vocabulary(string levels)
         {

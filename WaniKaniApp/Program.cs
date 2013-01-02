@@ -15,10 +15,13 @@ namespace WaniKaniClientDemo
 
             WaniKaniClient client = new WaniKaniClient(apiKey);
 
-            var data2 = client.UserInformation;
-            var data = client.Vocabulary();
+            var studyQueue = client.StudyQueue();
 
-            Console.WriteLine("Please a key to exit");
+            Console.WriteLine("Hello {0}", client.UserInformation().UserName);
+            Console.WriteLine("You have {0} reviews and {1} new lessons.", studyQueue.ReviewsAvailable, studyQueue.LessonsAvailable);
+            Console.WriteLine("You have {0} lessons in one hour and {1} within the next day.", studyQueue.ReviewsAvailableNextHour, studyQueue.ReviewsAvailableNextDay);
+
+            Console.WriteLine("\nPlease a key to exit");
             Console.ReadKey();
         }
     }
