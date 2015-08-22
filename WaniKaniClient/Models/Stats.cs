@@ -1,14 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
+using WaniKaniClientLib.Utils;
 
 namespace WaniKaniClientLib.Models
 {
     public class Stats
     {
         public string Srs { get; set; }
+
+        // The precise stage of SRS the learning item is currently at.
+        // Stages 1 to 4 fall within "Apprentice"; stages 5 & 6 are "Guru";
+        // Stages 7, 8 and 9 are "Master", "Enlightened" and "Burned"
+        // respectively
+        [JsonProperty("srs_numeric")]
+        public int SrsLevel { get; set; }
+
         public bool Burned { get; set; }
 
         [JsonProperty("meaning_correct")]
@@ -44,8 +50,7 @@ namespace WaniKaniClientLib.Models
                 if (UnlockedTimeStamp == 0)
                     return null;
 
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(UnlockedTimeStamp);
+                return Utilities.UnixEpoch.AddSeconds(UnlockedTimeStamp);
             }
         }
 
@@ -58,8 +63,7 @@ namespace WaniKaniClientLib.Models
                 if (AvailableTimeStamp == 0)
                     return null;
 
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(AvailableTimeStamp);
+                return Utilities.UnixEpoch.AddSeconds(AvailableTimeStamp);
             }
         }
 
@@ -72,10 +76,18 @@ namespace WaniKaniClientLib.Models
                 if (BurnedTimeStamp == 0)
                     return null;
 
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(BurnedTimeStamp);
+                return Utilities.UnixEpoch.AddSeconds(BurnedTimeStamp);
             }
         }
+
+        [JsonProperty("meaning_note")]
+        public string MeaningNote { get; set; }
+
+        [JsonProperty("reading_note")]
+        public string ReadingNote { get; set; }
+
+        [JsonProperty("user_synonyms")]
+        public string UserSynonyms { get; set; }
       
     }
 }

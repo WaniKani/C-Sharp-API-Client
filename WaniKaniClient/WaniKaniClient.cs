@@ -13,7 +13,7 @@ namespace WaniKaniClientLib
     public class WaniKaniClient
     {
         public string APIKey { get; private set; }
-        public static readonly string ApiVersion = "v1.1";
+        public static readonly string ApiVersion = "v1.4";
         public int CacheInMinutes { get; set; }
 
         private UserInformation _cachedUserInformation;

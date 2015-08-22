@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
+using WaniKaniClientLib.Utils;
 
 namespace WaniKaniClientLib.Models
 {
@@ -20,8 +18,7 @@ namespace WaniKaniClientLib.Models
         {
             get
             {
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(NextReviewTimeStamp);
+                return Utilities.UnixEpoch.AddSeconds(NextReviewTimeStamp);
             }
         }
 

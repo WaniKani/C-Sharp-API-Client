@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace WaniKaniClientLib.Models
 {
@@ -13,19 +9,7 @@ namespace WaniKaniClientLib.Models
         public string Meaning { get; set; }
         public int Level { get; set; }
 
-        [JsonProperty("unlocked_date")]
-        public long UnlockTimeStamp { get; set; }
-        public DateTime UnlockedDate
-        {
-            get
-            {
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(UnlockTimeStamp);
-            }
-        }
-
-        public string Percentage { get; set; }
-
+        [JsonProperty("user_specific")]
         public Stats Stats { get; set; }
     }
 }

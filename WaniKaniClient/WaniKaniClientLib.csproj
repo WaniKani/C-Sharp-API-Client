@@ -54,6 +54,7 @@
     <Compile Include="Models\StudyQueue.cs" />
     <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Models\Vocabulary.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="WaniKaniClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
