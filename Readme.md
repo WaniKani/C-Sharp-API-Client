@@ -1,9 +1,10 @@
 ## C-Sharp-API-Client
 This is a simple API Client for WaniKani to speed up projects written in .NET
-Current API version is 1.1
+Current API version is 1.4
 
 Copyright (c) 2012, Daniel Widegren
-All code is licensed under the MIT License, Please read License.txt for more information.
+Copyright (c) 2015, Iris Ward
+All code is licensed under the ISC License, Please read License.txt for more information.
 
 ## How to use:
 Include the dll or code into your project.
