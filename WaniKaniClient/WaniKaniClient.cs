@@ -262,6 +262,7 @@ namespace WaniKaniClientLib
         private JObject Request(string resource = null, string optionalArgument = null)
         {
             WebClient httpClient = new WebClient();
+            httpClient.Encoding = Encoding.UTF8;
             string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
 
             return JObject.Parse(responce);
