@@ -13,7 +13,7 @@ namespace WaniKaniClientLib
     public class WaniKaniClient
     {
         public string APIKey { get; private set; }
-        public static readonly string ApiVersion = "v1.1";
+        public static readonly string ApiVersion = "v1.4";
         public int CacheInMinutes { get; set; }
 
         private UserInformation _cachedUserInformation;
@@ -262,6 +262,7 @@ namespace WaniKaniClientLib
         private JObject Request(string resource = null, string optionalArgument = null)
         {
             WebClient httpClient = new WebClient();
+            httpClient.Encoding = Encoding.UTF8;
             string responce = httpClient.DownloadString(BuildUrl(resource, optionalArgument));
 
             return JObject.Parse(responce);

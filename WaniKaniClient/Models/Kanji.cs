@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace WaniKaniClientLib.Models
 {
@@ -14,7 +10,8 @@ namespace WaniKaniClientLib.Models
         }
 
         public string Onyomi { get; set; }
-        public string kunyomi { get; set; }
+        public string Kunyomi { get; set; }
+        public string Nanori { get; set; }
         
         [JsonProperty("important_reading")]
         public string ImportantReading { get; set; }

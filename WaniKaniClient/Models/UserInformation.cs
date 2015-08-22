@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
+using WaniKaniClientLib.Utils;
 
 namespace WaniKaniClientLib.Models
 {
@@ -24,14 +22,28 @@ namespace WaniKaniClientLib.Models
 
         [JsonProperty("creation_date")]
         public long CreationTimeStamp { get; set; }
-        public DateTime CreatioDate
+        public DateTime CreationDate
         {
             get
             {
-                var date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                return date.AddSeconds(CreationTimeStamp);
+                return Utilities.UnixEpoch.AddSeconds(CreationTimeStamp);
             }
         }
 
+        // We have to use a nullable long here as the vacation date is passed as "null" in the API
+        // if the user is not on vacation, rather than being omitted as in learning items
+        [JsonProperty("vacation_date")]
+        public long? VacationTimeStamp { get; set; }
+        public DateTime? VacationDate
+        {
+            get
+            {
+                if (VacationTimeStamp.HasValue)
+                {
+                    return Utilities.UnixEpoch.AddSeconds(VacationTimeStamp.Value);
+                }
+                return null;
+            }
+        }
     }
 }
